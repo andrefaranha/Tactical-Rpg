@@ -1,5 +1,6 @@
 package logic.state;
 
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,16 +9,16 @@ import java.util.Map;
 public class StateMachineStack {
 	
 	private Map<String, IState> mStates = new HashMap<String, IState>();
-	List<IState> mStack = new ArrayList<IState>();
+	private List<IState> mStack = new ArrayList<IState>();
 	
 	public void update(float elapsedTime) {
 		IState top = mStack.get(0);
 		top.update(elapsedTime);
 	}
 	
-	public void render() {
+	public void render(Graphics2D g) {
 		IState top = mStack.get(0);
-		top.render();;
+		top.render(g);
 	}
 	
 	public void push(String name) {
@@ -27,5 +28,9 @@ public class StateMachineStack {
 	
 	public IState pop() {
 		return mStack.remove(0);
+	}
+	
+	public void add(String name, IState state) {
+		mStates.put(name, state);
 	}
 }

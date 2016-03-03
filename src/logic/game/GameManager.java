@@ -5,6 +5,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import logic.state.MainMenuState;
+import logic.state.StateMachineStack;
+
 public class GameManager {
 
 	private BufferedImage image;
@@ -14,6 +17,8 @@ public class GameManager {
 
 	private int frames, fps;
 	private long lastTime, totalTime, beginTime;
+	
+	private StateMachineStack stateMachineStack;
 
 	public GameManager() {
 		beginTime = System.nanoTime();
@@ -31,6 +36,9 @@ public class GameManager {
 		lastTime = beginTime;
 
 		// ScreenManager.getInstance().changeScreen(ScreenManager.LOGO);
+		stateMachineStack = new StateMachineStack();
+		stateMachineStack.add("Intro", new MainMenuState());
+		stateMachineStack.push("Intro");
 	}
 
 	private void setRunning(boolean b) {
@@ -44,6 +52,7 @@ public class GameManager {
 	public void update(long delta) {
 		calcCurrentFPS();
 
+		stateMachineStack.update(delta);
 		// ScreenManager.getInstance().update(delta);
 
 		// if (KeyHandler.getInstance().isPressed(KeyHandler.EXIT))
@@ -55,6 +64,7 @@ public class GameManager {
 		g2d.setColor(Color.BLACK);
 		g2d.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 
+		stateMachineStack.render(g2d);
 		// ScreenManager.getInstance().draw(g2d);
 
 		drawFPS();
