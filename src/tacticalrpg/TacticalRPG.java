@@ -1,8 +1,18 @@
 package tacticalrpg;
 
-public class TacticalRPG {
+import java.awt.EventQueue;
 
+import logic.game.Game;
+
+public class TacticalRPG {
+	
 	public static void main(String[] args) {
-		System.out.println("The Game");
+		EventQueue.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				new Game("Tactical RPG");
+			}
+		});
 	}
 }
