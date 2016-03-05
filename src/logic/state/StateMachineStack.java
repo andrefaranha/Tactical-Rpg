@@ -11,6 +11,16 @@ public class StateMachineStack {
 	private Map<String, IState> mStates = new HashMap<String, IState>();
 	private List<IState> mStack = new ArrayList<IState>();
 	
+	private void onEnter() {
+		IState top = mStack.get(0);
+		top.onEnter();
+	}
+	
+	private void onExit() {
+		IState top = mStack.get(0);
+		top.onExit();
+	}
+	
 	public void update(float elapsedTime) {
 		IState top = mStack.get(0);
 		top.update(elapsedTime);
@@ -24,9 +34,11 @@ public class StateMachineStack {
 	public void push(String name) {
 		IState state = mStates.get(name);
 		mStack.add(0, state);
+		onEnter();
 	}
 	
 	public IState pop() {
+		onExit();
 		return mStack.remove(0);
 	}
 	

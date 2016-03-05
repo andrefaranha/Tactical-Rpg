@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import logic.state.MainMenuState;
+import logic.state.MapTestState;
 import logic.state.StateMachineStack;
 
 public class GameManager {
@@ -37,8 +37,8 @@ public class GameManager {
 
 		// ScreenManager.getInstance().changeScreen(ScreenManager.LOGO);
 		stateMachineStack = new StateMachineStack();
-		stateMachineStack.add("Intro", new MainMenuState());
-		stateMachineStack.push("Intro");
+		stateMachineStack.add("test", new MapTestState());
+		stateMachineStack.push("test");
 	}
 
 	private void setRunning(boolean b) {
