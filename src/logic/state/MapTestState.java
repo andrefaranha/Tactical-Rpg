@@ -2,12 +2,12 @@ package logic.state;
 
 import java.awt.Graphics2D;
 
-import map.Map;
+import map.TileMap;
 import map.TMXReader;
 
 public class MapTestState implements IState {
 
-	private Map map;
+	private TileMap map;
 	
 	@Override
 	public void update(float elapsedTime) {
@@ -23,6 +23,7 @@ public class MapTestState implements IState {
 	@Override
 	public void onEnter() {
 		map = TMXReader.read("resources/example.tmx");
+		map.onEnter();
 	}
 
 	@Override

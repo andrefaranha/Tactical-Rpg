@@ -67,13 +67,38 @@ public class TMXReader {
 			int imageWidth = Integer.parseInt(tileSetImageElement.getAttribute("width"));
 			int imageHeight = Integer.parseInt(tileSetImageElement.getAttribute("height"));
 			
-			tileSet.add(new TileSet(firstGid, name, tileWidth, tileHeight, source, imageWidth, imageHeight));
+			TileSet t = new TileSet(firstGid, name, tileWidth, tileHeight, source, imageWidth, imageHeight);
+			tileSet.add(t);
 		}
 		
 		return tileSet;
 	}
 	
-	public static Map read(String xmlFilepath) {
+	private static List<Integer> getDataFromDocument(Document doc) {
+		List<Integer> dataList = new ArrayList<Integer>();
+		
+		NodeList layerNodeList = doc.getElementsByTagName("layer");
+		for (int i = 0; i < layerNodeList.getLength(); i++) {
+			Node layerNode = layerNodeList.item(i);
+			Element layerElement = (Element) layerNode;
+			
+			Node dataNode = layerElement.getElementsByTagName("data").item(0);
+			Element dataElement = (Element) dataNode;
+			NodeList tileNodeList = dataElement.getElementsByTagName("tile");
+			List<Integer> layerData = new ArrayList<Integer>(); 
+			for (int j = 0; j < tileNodeList.getLength(); j++) {
+				Node tileNode = tileNodeList.item(j);
+				Element tileElement = (Element) tileNode;
+				layerData.add(Integer.parseInt(tileElement.getAttribute("gid")));
+			}
+			
+			dataList.addAll(layerData);
+		}
+		
+		return dataList;
+	}
+	
+	public static TileMap read(String xmlFilepath) {
 		Document doc = getDocument(getFile(xmlFilepath));
 		doc.getDocumentElement().normalize();
 		Node mapNode = doc.getElementsByTagName("map").item(0);
@@ -86,10 +111,10 @@ public class TMXReader {
 		int tileHeight = Integer.parseInt(mapElement.getAttribute("tileheight"));
 		System.out.println(mapWidth + ", " + mapHeight + ", " + tileWidth + ", " + tileHeight);
 		
-		Map map = new Map(mapWidth, mapHeight, tileWidth, tileHeight);
+		TileMap map = new TileMap(mapWidth, mapHeight, tileWidth, tileHeight);
 		
-		List<TileSet> tileSet = getTileSetFromDocument(doc);
-		map.setTileSet(tileSet);
+		map.setTileSet(getTileSetFromDocument(doc));
+		map.setData(getDataFromDocument(doc));
 		
 		return map;
 	}
