@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import map.TileMap;
 import map.TMXReader;
 
-public class MapTestState implements IState {
+public class MapTestState extends State {
 
 	private TileMap map;
 	

@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 import logic.game.GamePanel;
 
-public class MainMenuState implements IState {
+public class MainMenuState extends State {
 
 	@Override
 	public void update(float elapsedTime) {

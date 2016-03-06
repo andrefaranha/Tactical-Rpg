@@ -16,10 +16,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class TMXReader {
-
-	private static File getFile(String filepath) {
-		return new File(filepath);
-	}
 	
 	private static Document getDocument(File xmlFile) {
 		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -99,7 +95,7 @@ public class TMXReader {
 	}
 	
 	public static TileMap read(String xmlFilepath) {
-		Document doc = getDocument(getFile(xmlFilepath));
+		Document doc = getDocument(new File(xmlFilepath));
 		doc.getDocumentElement().normalize();
 		Node mapNode = doc.getElementsByTagName("map").item(0);
 		System.out.println(mapNode.getNodeName());

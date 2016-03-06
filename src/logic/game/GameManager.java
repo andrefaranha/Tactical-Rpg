@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import logic.input.KeyHandler;
 import logic.state.MapTestState;
 import logic.state.StateMachineStack;
 
@@ -48,16 +49,19 @@ public class GameManager {
 	public boolean isRunning() {
 		return running;
 	}
+	
+	public void processInput(KeyHandler keyHandler) {
+		stateMachineStack.processInput(keyHandler);
+		keyHandler.update();
+	}
 
 	public void update(long delta) {
 		calcCurrentFPS();
 
 		stateMachineStack.update(delta);
-		// ScreenManager.getInstance().update(delta);
 
 		// if (KeyHandler.getInstance().isPressed(KeyHandler.EXIT))
 		// setRunning(false);
-		// KeyHandler.getInstance().update();
 	}
 
 	public void draw() {
@@ -65,7 +69,6 @@ public class GameManager {
 		g2d.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 
 		stateMachineStack.render(g2d);
-		// ScreenManager.getInstance().draw(g2d);
 
 		drawFPS();
 	}

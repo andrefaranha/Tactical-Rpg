@@ -6,43 +6,50 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import logic.input.KeyHandler;
+
 public class StateMachineStack {
 	
-	private Map<String, IState> mStates = new HashMap<String, IState>();
-	private List<IState> mStack = new ArrayList<IState>();
+	private Map<String, State> mStates = new HashMap<String, State>();
+	private List<State> mStack = new ArrayList<State>();
 	
 	private void onEnter() {
-		IState top = mStack.get(0);
+		State top = mStack.get(0);
 		top.onEnter();
 	}
 	
 	private void onExit() {
-		IState top = mStack.get(0);
+		State top = mStack.get(0);
 		top.onExit();
 	}
 	
+	public void processInput(KeyHandler keyHandler) {
+		State top = mStack.get(0);
+		top.processInput(keyHandler);
+	}
+	
 	public void update(float elapsedTime) {
-		IState top = mStack.get(0);
+		State top = mStack.get(0);
 		top.update(elapsedTime);
 	}
 	
 	public void render(Graphics2D g) {
-		IState top = mStack.get(0);
+		State top = mStack.get(0);
 		top.render(g);
 	}
 	
 	public void push(String name) {
-		IState state = mStates.get(name);
+		State state = mStates.get(name);
 		mStack.add(0, state);
 		onEnter();
 	}
 	
-	public IState pop() {
+	public State pop() {
 		onExit();
 		return mStack.remove(0);
 	}
 	
-	public void add(String name, IState state) {
+	public void add(String name, State state) {
 		mStates.put(name, state);
 	}
 }

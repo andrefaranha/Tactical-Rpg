@@ -11,7 +11,7 @@ public class TacticalRPG {
 			
 			@Override
 			public void run() {
-				new Game("Tactical RPG");
+				new Game("Tactical RPG", 640, 640);
 			}
 		});
 	}

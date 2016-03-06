@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import logic.state.IState;
+import logic.state.State;
 
-public class TileMap implements IState {
+public class TileMap extends State {
 	
 	private int mapWidth, mapHeight, tileWidth, tileHeight;
 	private List<Integer> data;

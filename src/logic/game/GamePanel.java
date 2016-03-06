@@ -4,6 +4,8 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
+import logic.input.KeyHandler;
+
 public class GamePanel extends JPanel implements Runnable {
 
 	public static int WIDTH, HEIGHT;
@@ -16,7 +18,8 @@ public class GamePanel extends JPanel implements Runnable {
 	private final long FIXED_RATE = ONE_SEC_IN_NANO / FPS;
 
 	private GameManager gameManager;
-
+	private KeyHandler keyHandler;
+	
 	private Thread thread;
 
 	public GamePanel(int width, int height) {
@@ -32,6 +35,9 @@ public class GamePanel extends JPanel implements Runnable {
 		super.addNotify();
 
 		gameManager = new GameManager();
+		keyHandler = new KeyHandler();
+		
+		addKeyListener(keyHandler);
 		// addKeyListener(KeyHandler.getInstance());
 		// addMouseListener(MouseHandler.getInstance());
 		// addMouseMotionListener(MouseHandler.getInstance());
@@ -59,6 +65,7 @@ public class GamePanel extends JPanel implements Runnable {
 			if (currentTime >= nextTime) {
 				nextTime += FIXED_RATE;
 
+				gameManager.processInput(keyHandler);
 				gameManager.update(currentTime - lastTime);
 				gameManager.draw();
 				gameManager.render(getGraphics(), WIDTH, HEIGHT);
