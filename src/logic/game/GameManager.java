@@ -36,7 +36,6 @@ public class GameManager {
 		fps = 0;
 		lastTime = beginTime;
 
-		// ScreenManager.getInstance().changeScreen(ScreenManager.LOGO);
 		stateMachineStack = new StateMachineStack();
 		stateMachineStack.add("test", new MapTestState());
 		stateMachineStack.push("test");
@@ -59,9 +58,6 @@ public class GameManager {
 		calcCurrentFPS();
 
 		stateMachineStack.update(delta);
-
-		// if (KeyHandler.getInstance().isPressed(KeyHandler.EXIT))
-		// setRunning(false);
 	}
 
 	public void draw() {

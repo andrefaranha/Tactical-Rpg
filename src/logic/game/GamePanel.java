@@ -25,6 +25,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public GamePanel(int width, int height) {
 		WIDTH = width;
 		HEIGHT = height;
+		
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setFocusable(true);
 		requestFocus();
@@ -38,9 +39,6 @@ public class GamePanel extends JPanel implements Runnable {
 		keyHandler = new KeyHandler();
 		
 		addKeyListener(keyHandler);
-		// addKeyListener(KeyHandler.getInstance());
-		// addMouseListener(MouseHandler.getInstance());
-		// addMouseMotionListener(MouseHandler.getInstance());
 
 		if (thread == null) {
 			thread = new Thread(this);
@@ -87,5 +85,4 @@ public class GamePanel extends JPanel implements Runnable {
 	private void exit() {
 		System.exit(0);
 	}
-
 }

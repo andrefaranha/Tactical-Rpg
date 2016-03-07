@@ -1,11 +1,11 @@
-package map;
+package tilemap;
 
-public class TileSet {
+public class Tileset {
 	
 	private int firstGid, lastGid, tileWidth, tileHeight, imageWidth, imageHeight, tileAmountWidth;
 	private String name, source;
 	
-	public TileSet(int firstGid, String name, int tileWidth, int tileHeight, String source, int imageWidth, int imageHeight) {
+	public Tileset(int firstGid, String name, int tileWidth, int tileHeight, String source, int imageWidth, int imageHeight) {
 		this.firstGid = firstGid;
 		this.name = name;
 		this.tileWidth = tileWidth;
@@ -13,8 +13,8 @@ public class TileSet {
 		this.source = source;
 		this.imageWidth = imageWidth;
 		this.imageHeight = imageHeight;
-		tileAmountWidth = Math.floorDiv(imageWidth, tileWidth);
-		lastGid = tileAmountWidth * Math.floorDiv(imageHeight, tileHeight) + firstGid - 1;
+		tileAmountWidth = imageWidth / tileWidth;
+		lastGid = tileAmountWidth * (imageHeight / tileHeight) + firstGid - 1;
 	}
 	
 	public String getSource() {

@@ -18,6 +18,6 @@ public class Game {
 	}
 	
 	public Game(String title) {
-		this(title, 800, 600);
+		this(title, 640, 640);
 	}
 }
