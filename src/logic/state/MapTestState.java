@@ -34,7 +34,22 @@ public class MapTestState extends State {
 	}
 	
 	@Override
-	public void rightButtonPressed() {
-//		map.rightButtonPressed();
+	public void upButtonDown() {
+		tilemap.upButtonDown();
+	}
+	
+	@Override
+	public void leftButtonDown() {
+		tilemap.leftButtonDown();
+	}
+	
+	@Override
+	public void downButtonDown() {
+		tilemap.downButtonDown();
+	}
+	
+	@Override
+	public void rightButtonDown() {
+		tilemap.rightButtonDown();
 	}
 }

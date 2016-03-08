@@ -23,7 +23,13 @@ public class TilemapLayer {
 			int gid = layerData.get(i);
 			int x = (i * tileWidth) % (mapWidth*tileWidth);
 			int y = ((i / mapWidth) * tileHeight) % (mapHeight*tileHeight);
-			g.drawImage(tilesetCollection.getTile(gid), x, y, null);
+			Tile t = tilesetCollection.getTile(gid);
+			if (t != null)
+				g.drawImage(t.getImage(), x, y, null);
 		}
+	}
+	
+	public Tile getTileAt(int mapLocation) {
+		return tilesetCollection.getTile(layerData.get(mapLocation));
 	}
 }

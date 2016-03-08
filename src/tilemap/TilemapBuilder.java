@@ -132,12 +132,13 @@ public class TilemapBuilder {
 
 		TilesetCollection tilesetCollection = new TilesetCollection(tileWidth, tileHeight, getTileSetList(mapElement));
 
-		return new Tilemap(
+		return new Tilemap(mapWidth, mapHeight,
 				new TilemapLayer(mapWidth, mapHeight, getLayerDataFromType(mapElement, LAYER_TYPE_BACKGROUND),
 						tilesetCollection),
 				new TilemapLayer(mapWidth, mapHeight, getLayerDataFromType(mapElement, LAYER_TYPE_FOREGROUND),
 						tilesetCollection),
 				new TilemapLayer(mapWidth, mapHeight, getLayerDataFromType(mapElement, LAYER_TYPE_TOP),
-						tilesetCollection));
+						tilesetCollection),
+				0);
 	}
 }
