@@ -12,8 +12,7 @@ public class MapTestState extends State {
 	
 	@Override
 	public void update(float elapsedTime) {
-		// TODO Auto-generated method stub
-
+		tilemap.update(elapsedTime);
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 
+import logic.entity.Entity;
 import logic.input.KeyHandler;
 import logic.player.Player;
 import logic.player.PlayerManager;
@@ -40,7 +41,7 @@ public class GameManager {
 		fps = 0;
 		lastTime = beginTime;
 
-		PlayerManager.getInstance().setPlayer(new Player(new ImageIcon("resources/player.png").getImage(), 0));
+		PlayerManager.getInstance().setPlayer(new Entity(new ImageIcon("resources/player.png").getImage(), 0));
 		
 		stateMachineStack = new StateMachineStack();
 		stateMachineStack.add("test", new MapTestState());

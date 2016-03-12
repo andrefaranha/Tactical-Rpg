@@ -2,17 +2,17 @@ package tilemap;
 
 import java.awt.Graphics2D;
 
-import logic.player.Player;
+import logic.entity.Entity;
 import logic.player.PlayerManager;
 
 public class Tilemap {
 
 	private int mapWidth, mapHeight;
 	private TilemapLayer backgroundlayer, foregroundLayer, topLayer;
-	private Player player;
+	private Entity player;
 
 	public Tilemap(int mapWidth, int mapHeight, TilemapLayer Backgroundlayer, TilemapLayer foregroundLayer,
-			TilemapLayer topLayer, int playerPosition) {
+			TilemapLayer topLayer) {
 		this.mapWidth = mapWidth;
 		this.mapHeight = mapHeight;
 		this.backgroundlayer = Backgroundlayer;
@@ -22,43 +22,55 @@ public class Tilemap {
 		player = PlayerManager.getInstance().getPlayer();
 	}
 
+	public void update(float elapsedTime) {
+		player.update(elapsedTime);
+	}
+
 	public void render(Graphics2D g) {
 		backgroundlayer.render(g);
 		foregroundLayer.render(g);
 
-		int position = player.getPosition();
-		g.drawImage(player.getImage(), (position % mapWidth) * 32, (position / mapWidth) * 32, null);
+		g.drawImage(player.getImage(), player.getX(), player.getY(), null);
+		// g.drawString("(" + player.getX() + "," + player.getY() + ")",
+		// player.getX(), player.getY());
 
 		topLayer.render(g);
 	}
 
-	private boolean canMoveToPlayerNewPosition(int newPosition) {
-		if (newPosition < 0 || newPosition >= mapWidth * mapHeight || foregroundLayer.getTileAt(newPosition) != null)
+	private boolean canMoveToPlayerNewPosition(int x, int y) {
+		int posXTile = x / 32;
+		int posYTile = y / 32;
+		if (posXTile < 0 || posXTile >= mapWidth)
+			return false;
+		if (posYTile < 0 || posYTile >= mapHeight)
+			return false;
+		if (foregroundLayer.getTileAt(posXTile, posYTile) != null)
 			return false;
 
 		return true;
 	}
 
 	public void upButtonDown() {
-		if (canMoveToPlayerNewPosition(player.getPosition() - mapWidth))
-			player.setPosition(player.getPosition() - mapWidth);
-		
+		int newYPosition = player.getY() - 32;
+		if (canMoveToPlayerNewPosition(player.getX(), newYPosition))
+			player.setYDestination(newYPosition);
 	}
 
 	public void leftButtonDown() {
-		if (canMoveToPlayerNewPosition(player.getPosition() - 1))
-			if (player.getPosition() / mapWidth == (player.getPosition()-1) / mapWidth)
-				player.setPosition(player.getPosition() - 1);
+		int newXPosition = player.getX() - 32;
+		if (canMoveToPlayerNewPosition(newXPosition, player.getY()))
+			player.setXDestination(newXPosition);
 	}
 
 	public void downButtonDown() {
-		if (canMoveToPlayerNewPosition(player.getPosition() + mapWidth))
-			player.setPosition(player.getPosition() + mapWidth);
+		int newYPosition = player.getY() + 32;
+		if (canMoveToPlayerNewPosition(player.getX(), newYPosition))
+			player.setYDestination(newYPosition);
 	}
 
 	public void rightButtonDown() {
-		if (canMoveToPlayerNewPosition(player.getPosition() + 1))
-			if (player.getPosition() / mapWidth == (player.getPosition()+1) / mapWidth)
-				player.setPosition(player.getPosition() + 1);
+		int newXPosition = player.getX() + 32;
+		if (canMoveToPlayerNewPosition(newXPosition, player.getY()))
+			player.setXDestination(newXPosition);
 	}
 }

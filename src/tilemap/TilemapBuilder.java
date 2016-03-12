@@ -138,7 +138,6 @@ public class TilemapBuilder {
 				new TilemapLayer(mapWidth, mapHeight, getLayerDataFromType(mapElement, LAYER_TYPE_FOREGROUND),
 						tilesetCollection),
 				new TilemapLayer(mapWidth, mapHeight, getLayerDataFromType(mapElement, LAYER_TYPE_TOP),
-						tilesetCollection),
-				0);
+						tilesetCollection));
 	}
 }

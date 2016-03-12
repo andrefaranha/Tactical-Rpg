@@ -1,10 +1,12 @@
 package logic.player;
 
+import logic.entity.Entity;
+
 public class PlayerManager {
 	
 	private static PlayerManager instance;
 	
-	private Player player;
+	private Entity player;
 	
 	private PlayerManager() {}
 	
@@ -14,11 +16,11 @@ public class PlayerManager {
 		return instance;
 	}
 
-	public Player getPlayer() {
+	public Entity getPlayer() {
 		return player;
 	}
 
-	public void setPlayer(Player player) {
+	public void setPlayer(Entity player) {
 		this.player = player;
 	}
 }
