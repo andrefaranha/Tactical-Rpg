@@ -1,20 +1,23 @@
 package logic.entity;
 
+import java.awt.Graphics2D;
 import java.awt.Image;
 
 public class Entity {
 
-	private Image image;
+	private Sprite sprite;
 	private int position;
 	private float x, y, xDest, yDest;
 
 	private boolean moving;
 
-	private int tilesPerSecond = 5;
+	private int tilesPerSecond = 3;
 	private float pixelsToMovePerFrame = tilesPerSecond * 32 / 40;
+	
+	private int walked;
 
 	public Entity(Image image, int position) {
-		setImage(image);
+		sprite = SpriteBuilder.build("resources/char.png", 32, 32);
 		setPosition(position);
 	}
 
@@ -24,30 +27,42 @@ public class Entity {
 		}
 	}
 
+	public void render(Graphics2D g) {
+		g.drawImage(sprite.getImage(), getX(), getY(), null);
+	}
+
 	private void moveToDestination(float elapsedTime) {
 		if (yDest != y) {
+			walked += pixelsToMovePerFrame;
 			if (y < yDest) {
 				y += pixelsToMovePerFrame;
-				if (y > yDest) y = yDest;
+				if (y > yDest)
+					y = yDest;
 			} else if (y > yDest)
 				y -= pixelsToMovePerFrame;
 		} else if (xDest != x) {
+			walked += pixelsToMovePerFrame;
 			if (x < xDest) {
 				x += pixelsToMovePerFrame;
-				if (x > xDest) x = xDest;
-			}
-			else if (x > xDest)
+				if (x > xDest)
+					x = xDest;
+			} else if (x > xDest)
 				x -= pixelsToMovePerFrame;
-		} else
+		} else {
+			walked = 0;
 			moving = false;
-	}
-
-	public Image getImage() {
-		return image;
-	}
-
-	public void setImage(Image image) {
-		this.image = image;
+			sprite.setWalkingPosition(Sprite.WALKING_STANDING);
+		}
+		if (walked != 0) {
+			if (walked < 8)
+				sprite.setWalkingPosition(Sprite.WALKING_RIGHT_FOOT_FRONT);
+			else if (walked < 16)
+				sprite.setWalkingPosition(Sprite.WALKING_STANDING);
+			else if (walked < 24)
+				sprite.setWalkingPosition(Sprite.WALKING_LEFT_FOOT_FRONT);
+			else
+				sprite.setWalkingPosition(Sprite.WALKING_STANDING);
+		}
 	}
 
 	public int getPosition() {
@@ -79,6 +94,10 @@ public class Entity {
 			return;
 		moving = true;
 		this.xDest = xDest;
+		if (xDest > x)
+			sprite.setFacingPosition(Sprite.FACING_RIGHT);
+		else
+			sprite.setFacingPosition(Sprite.FACING_LEFT);
 	}
 
 	public void setYDestination(int yDest) {
@@ -86,5 +105,9 @@ public class Entity {
 			return;
 		moving = true;
 		this.yDest = yDest;
+		if (yDest > y)
+			sprite.setFacingPosition(Sprite.FACING_DOWN);
+		else
+			sprite.setFacingPosition(Sprite.FACING_UP);
 	}
 }

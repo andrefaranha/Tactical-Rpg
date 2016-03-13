@@ -7,7 +7,6 @@ import tilemap.TilemapBuilder;
 
 public class MapTestState extends State {
 
-//	private OLDTileMap map;
 	private Tilemap tilemap;
 	
 	@Override

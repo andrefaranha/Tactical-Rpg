@@ -30,7 +30,8 @@ public class Tilemap {
 		backgroundlayer.render(g);
 		foregroundLayer.render(g);
 
-		g.drawImage(player.getImage(), player.getX(), player.getY(), null);
+		player.render(g);
+//		g.drawImage(player.getImage(), player.getX(), player.getY(), null);
 		// g.drawString("(" + player.getX() + "," + player.getY() + ")",
 		// player.getX(), player.getY());
 

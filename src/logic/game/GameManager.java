@@ -41,7 +41,7 @@ public class GameManager {
 		fps = 0;
 		lastTime = beginTime;
 
-		PlayerManager.getInstance().setPlayer(new Entity(new ImageIcon("resources/player.png").getImage(), 0));
+		PlayerManager.getInstance().setPlayer(new Entity(new ImageIcon("resources/char.png").getImage(), 0));
 		
 		stateMachineStack = new StateMachineStack();
 		stateMachineStack.add("test", new MapTestState());
