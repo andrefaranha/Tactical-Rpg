@@ -11,6 +11,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -42,6 +43,10 @@ public class TilemapBuilder {
 
 	private static final String TILE = "tile";
 	private static final String TILE_GID = "gid";
+
+	private static final String PLAYER = "player";
+	private static final String PLAYER_X = "x";
+	private static final String PLAYER_Y = "y";
 
 	private static Element getRootElement(File xmlFile) {
 		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -139,5 +144,25 @@ public class TilemapBuilder {
 						tilesetCollection),
 				new TilemapLayer(mapWidth, mapHeight, getLayerDataFromType(mapElement, LAYER_TYPE_TOP),
 						tilesetCollection));
+	}
+
+	public static int getPlayerXPosition(String filepath) {
+		Element mapElement = getRootElement(new File(filepath));
+
+		int tileWidth = Integer.parseInt(mapElement.getAttribute(MAP_TILEWIDTH));
+
+		Node playerNode = mapElement.getElementsByTagName(PLAYER).item(0);
+		Element playerElement = (Element) playerNode;
+		return Integer.parseInt(playerElement.getAttribute(PLAYER_X)) * tileWidth;
+	}
+
+	public static int getPlayerYPosition(String filepath) {
+		Element mapElement = getRootElement(new File(filepath));
+
+		int tileHeight = Integer.parseInt(mapElement.getAttribute(MAP_TILEHEIGHT));
+
+		Node playerNode = mapElement.getElementsByTagName(PLAYER).item(0);
+		Element playerElement = (Element) playerNode;
+		return Integer.parseInt(playerElement.getAttribute(PLAYER_Y)) * tileHeight;
 	}
 }

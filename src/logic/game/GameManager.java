@@ -9,7 +9,6 @@ import javax.swing.ImageIcon;
 
 import logic.entity.Entity;
 import logic.input.KeyHandler;
-import logic.player.Player;
 import logic.player.PlayerManager;
 import logic.state.MapTestState;
 import logic.state.StateMachineStack;
@@ -41,7 +40,7 @@ public class GameManager {
 		fps = 0;
 		lastTime = beginTime;
 
-		PlayerManager.getInstance().setPlayer(new Entity(new ImageIcon("resources/char.png").getImage(), 0));
+		PlayerManager.getInstance().setPlayer(new Entity(new ImageIcon("resources/char.png").getImage()));
 		
 		stateMachineStack = new StateMachineStack();
 		stateMachineStack.add("test", new MapTestState());

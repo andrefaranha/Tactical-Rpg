@@ -6,19 +6,23 @@ import java.awt.Image;
 public class Entity {
 
 	private Sprite sprite;
-	private int position;
 	private float x, y, xDest, yDest;
 
 	private boolean moving;
 
 	private int tilesPerSecond = 3;
 	private float pixelsToMovePerFrame = tilesPerSecond * 32 / 40;
-	
+
 	private int walked;
 
-	public Entity(Image image, int position) {
+	public Entity(Image image, int x, int y) {
 		sprite = SpriteBuilder.build("resources/char.png", 32, 32);
-		setPosition(position);
+		setXWithoutMoving(x);
+		setYWithoutMoving(y);
+	}
+
+	public Entity(Image image) {
+		this(image, 0, 0);
 	}
 
 	public void update(float elapsedTime) {
@@ -65,14 +69,6 @@ public class Entity {
 		}
 	}
 
-	public int getPosition() {
-		return position;
-	}
-
-	public void setPosition(int position) {
-		this.position = position;
-	}
-
 	public int getX() {
 		return (int) x;
 	}
@@ -87,6 +83,16 @@ public class Entity {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	public void setXWithoutMoving(int x) {
+		setX(x);
+		this.xDest = x;
+	}
+
+	public void setYWithoutMoving(int y) {
+		setY(y);
+		this.yDest = y;
 	}
 
 	public void setFacingDirection(int direction) {

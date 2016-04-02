@@ -1227,5 +1227,5 @@
    <tile gid="0"/>
   </data>
  </layer>
- <player position="42" />
+ <player x="1" y="2" />
 </map>
