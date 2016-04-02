@@ -3,6 +3,7 @@ package tilemap;
 import java.awt.Graphics2D;
 
 import logic.entity.Entity;
+import logic.entity.Sprite;
 import logic.player.PlayerManager;
 
 public class Tilemap {
@@ -53,24 +54,28 @@ public class Tilemap {
 
 	public void upButtonDown() {
 		int newYPosition = player.getY() - 32;
+		player.setFacingDirection(Sprite.FACING_UP);
 		if (canMoveToPlayerNewPosition(player.getX(), newYPosition))
 			player.setYDestination(newYPosition);
 	}
 
 	public void leftButtonDown() {
 		int newXPosition = player.getX() - 32;
+		player.setFacingDirection(Sprite.FACING_LEFT);
 		if (canMoveToPlayerNewPosition(newXPosition, player.getY()))
 			player.setXDestination(newXPosition);
 	}
 
 	public void downButtonDown() {
 		int newYPosition = player.getY() + 32;
+		player.setFacingDirection(Sprite.FACING_DOWN);
 		if (canMoveToPlayerNewPosition(player.getX(), newYPosition))
 			player.setYDestination(newYPosition);
 	}
 
 	public void rightButtonDown() {
 		int newXPosition = player.getX() + 32;
+		player.setFacingDirection(Sprite.FACING_RIGHT);
 		if (canMoveToPlayerNewPosition(newXPosition, player.getY()))
 			player.setXDestination(newXPosition);
 	}

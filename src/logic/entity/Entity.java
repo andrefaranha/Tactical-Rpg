@@ -89,15 +89,17 @@ public class Entity {
 		this.y = y;
 	}
 
+	public void setFacingDirection(int direction) {
+		if (moving)
+			return;
+		sprite.setFacingPosition(direction);
+	}
+
 	public void setXDestination(int xDest) {
 		if (moving)
 			return;
 		moving = true;
 		this.xDest = xDest;
-		if (xDest > x)
-			sprite.setFacingPosition(Sprite.FACING_RIGHT);
-		else
-			sprite.setFacingPosition(Sprite.FACING_LEFT);
 	}
 
 	public void setYDestination(int yDest) {
@@ -105,9 +107,5 @@ public class Entity {
 			return;
 		moving = true;
 		this.yDest = yDest;
-		if (yDest > y)
-			sprite.setFacingPosition(Sprite.FACING_DOWN);
-		else
-			sprite.setFacingPosition(Sprite.FACING_UP);
 	}
 }
