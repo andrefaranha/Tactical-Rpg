@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -14,6 +15,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import logic.entity.Entity;
 
 public class TilemapBuilder {
 
@@ -47,6 +50,12 @@ public class TilemapBuilder {
 	private static final String PLAYER = "player";
 	private static final String PLAYER_X = "x";
 	private static final String PLAYER_Y = "y";
+
+	private static final String EVENT_LAYER = "eventLayer";
+	private static final String EVENT_LAYER_TYPE = "type";
+	private static final String EVENT = "event";
+	private static final String EVENT_X = "x";
+	private static final String EVENT_Y = "y";
 
 	private static Element getRootElement(File xmlFile) {
 		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -127,6 +136,38 @@ public class TilemapBuilder {
 		return layerData;
 	}
 
+	private static List<Element> getEventLayerWithType(Element mapElement, String layerType) {
+		List<Element> layerElementList = new ArrayList<Element>();
+
+		NodeList eventLayerNodeList = mapElement.getElementsByTagName(EVENT_LAYER);
+		for (int i = 0; i < eventLayerNodeList.getLength(); i++) {
+			Element layerElement = (Element) eventLayerNodeList.item(i);
+			if (layerElement.getAttribute(EVENT_LAYER_TYPE).equals(layerType))
+				layerElementList.add(layerElement);
+		}
+
+		return layerElementList;
+	}
+
+	private static List<Entity> getEventsFromType(Element mapElement, String layerType) {
+		List<Entity> layerEvents = new ArrayList<Entity>();
+
+		int tileWidth = Integer.parseInt(mapElement.getAttribute(MAP_TILEWIDTH));
+		int tileHeight = Integer.parseInt(mapElement.getAttribute(MAP_TILEHEIGHT));
+
+		for (Element eventLayerElement : getEventLayerWithType(mapElement, layerType)) {
+			NodeList eventNodeList = eventLayerElement.getElementsByTagName(EVENT);
+			for (int j = 0; j < eventNodeList.getLength(); j++) {
+				Element eventElement = (Element) eventNodeList.item(j);
+				int eventX = Integer.parseInt(eventElement.getAttribute(EVENT_X)) * tileWidth;
+				int eventY = Integer.parseInt(eventElement.getAttribute(EVENT_Y)) * tileHeight;
+				layerEvents.add(new Entity(new ImageIcon("resources/hero.png").getImage(), eventX, eventY));
+			}
+		}
+
+		return layerEvents;
+	}
+
 	public static Tilemap build(String filepath) {
 		Element mapElement = getRootElement(new File(filepath));
 
@@ -143,7 +184,10 @@ public class TilemapBuilder {
 				new TilemapLayer(mapWidth, mapHeight, getLayerDataFromType(mapElement, LAYER_TYPE_FOREGROUND),
 						tilesetCollection),
 				new TilemapLayer(mapWidth, mapHeight, getLayerDataFromType(mapElement, LAYER_TYPE_TOP),
-						tilesetCollection));
+						tilesetCollection),
+				new TilemapEventLayer(tileWidth, tileHeight, getEventsFromType(mapElement, LAYER_TYPE_BACKGROUND)),
+				new TilemapEventLayer(tileWidth, tileHeight, getEventsFromType(mapElement, LAYER_TYPE_FOREGROUND)),
+				new TilemapEventLayer(tileWidth, tileHeight, getEventsFromType(mapElement, LAYER_TYPE_TOP)));
 	}
 
 	public static int getPlayerXPosition(String filepath) {

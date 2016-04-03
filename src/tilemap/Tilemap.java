@@ -9,16 +9,21 @@ import logic.player.PlayerManager;
 public class Tilemap {
 
 	private int mapWidth, mapHeight;
-	private TilemapLayer backgroundlayer, foregroundLayer, topLayer;
+	private TilemapLayer backgroundLayer, foregroundLayer, topLayer;
+	private TilemapEventLayer backgroundEventLayer, foregroundEventLayer, topEventLayer;
 	private Entity player;
 
-	public Tilemap(int mapWidth, int mapHeight, TilemapLayer Backgroundlayer, TilemapLayer foregroundLayer,
-			TilemapLayer topLayer) {
+	public Tilemap(int mapWidth, int mapHeight, TilemapLayer backgroundLayer, TilemapLayer foregroundLayer,
+			TilemapLayer topLayer, TilemapEventLayer backgroundEventLayer, TilemapEventLayer foregroundEventLayer,
+			TilemapEventLayer topEventLayer) {
 		this.mapWidth = mapWidth;
 		this.mapHeight = mapHeight;
-		this.backgroundlayer = Backgroundlayer;
+		this.backgroundLayer = backgroundLayer;
 		this.foregroundLayer = foregroundLayer;
 		this.topLayer = topLayer;
+		this.backgroundEventLayer = backgroundEventLayer;
+		this.foregroundEventLayer = foregroundEventLayer;
+		this.topEventLayer = topEventLayer;
 
 		player = PlayerManager.getInstance().getPlayer();
 	}
@@ -28,15 +33,18 @@ public class Tilemap {
 	}
 
 	public void render(Graphics2D g) {
-		backgroundlayer.render(g);
+		backgroundLayer.render(g);
+		backgroundEventLayer.render(g);
 		foregroundLayer.render(g);
+		foregroundEventLayer.render(g);
 
 		player.render(g);
-//		g.drawImage(player.getImage(), player.getX(), player.getY(), null);
+		// g.drawImage(player.getImage(), player.getX(), player.getY(), null);
 		// g.drawString("(" + player.getX() + "," + player.getY() + ")",
 		// player.getX(), player.getY());
 
 		topLayer.render(g);
+		topEventLayer.render(g);
 	}
 
 	private boolean canMoveToPlayerNewPosition(int x, int y) {
@@ -47,6 +55,8 @@ public class Tilemap {
 		if (posYTile < 0 || posYTile >= mapHeight)
 			return false;
 		if (foregroundLayer.getTileAt(posXTile, posYTile) != null)
+			return false;
+		if (foregroundEventLayer.getEventAt(posXTile, posYTile) != null)
 			return false;
 
 		return true;

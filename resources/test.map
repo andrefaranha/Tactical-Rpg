@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="20" height="20" tilewidth="32" tileheight="32">
+ <player x="1" y="2" />
  <tileset firstgid="1" name="grass-tiles-2-small" tilewidth="32" tileheight="32">
   <image source="grass-tiles-2-small.png" width="384" height="192"/>
  </tileset>
@@ -1227,5 +1228,13 @@
    <tile gid="0"/>
   </data>
  </layer>
- <player x="1" y="2" />
+ <eventLayer type="background">
+  <event x="2" y="2" />
+ </eventLayer>
+  <eventLayer type="foreground">
+  <event x="3" y="3" />
+ </eventLayer>
+  <eventLayer type="top">
+  <event x="4" y="4" />
+ </eventLayer>
 </map>
