@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.ImageIcon;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -161,7 +160,7 @@ public class TilemapBuilder {
 				Element eventElement = (Element) eventNodeList.item(j);
 				int eventX = Integer.parseInt(eventElement.getAttribute(EVENT_X)) * tileWidth;
 				int eventY = Integer.parseInt(eventElement.getAttribute(EVENT_Y)) * tileHeight;
-				layerEvents.add(new Entity(new ImageIcon("resources/hero.png").getImage(), eventX, eventY));
+				layerEvents.add(new Entity("resources/hero.png", eventX, eventY));
 			}
 		}
 

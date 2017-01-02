@@ -5,8 +5,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import javax.swing.ImageIcon;
-
 import logic.entity.Entity;
 import logic.input.KeyHandler;
 import logic.player.PlayerManager;
@@ -40,7 +38,7 @@ public class GameManager {
 		fps = 0;
 		lastTime = beginTime;
 
-		PlayerManager.getInstance().setPlayer(new Entity(new ImageIcon("resources/char.png").getImage()));
+		PlayerManager.getInstance().setPlayer(new Entity("resources/char.png"));
 		
 		stateMachineStack = new StateMachineStack();
 		stateMachineStack.add("test", new MapTestState());

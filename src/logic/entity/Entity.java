@@ -1,7 +1,6 @@
 package logic.entity;
 
 import java.awt.Graphics2D;
-import java.awt.Image;
 
 public class Entity {
 
@@ -15,14 +14,14 @@ public class Entity {
 
 	private int walked;
 
-	public Entity(Image image, int x, int y) {
-		sprite = SpriteBuilder.build("resources/char.png", 32, 32);
+	public Entity(String imageFilepath, int x, int y) {
+		sprite = SpriteBuilder.build(imageFilepath, 32, 32);
 		setXWithoutMoving(x);
 		setYWithoutMoving(y);
 	}
 
-	public Entity(Image image) {
-		this(image, 0, 0);
+	public Entity(String imageFilepath) {
+		this(imageFilepath, 0, 0);
 	}
 
 	public void update(float elapsedTime) {
